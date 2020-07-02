@@ -15,9 +15,11 @@ module.exports = (app, passport) => {
     res.redirect('/signin')
   }
 
+  // home
   app.get('/', authenticated, (req, res) => res.redirect('/restaurants'))
   app.get('/restaurants', authenticated, restController.getRestaurants)
 
+  // admin
   app.get('/admin', authenticatedAdmin, (req, res) =>
     res.redirect('/admin/restaurants')
   )
@@ -26,7 +28,18 @@ module.exports = (app, passport) => {
     authenticatedAdmin,
     adminController.getRestaurants
   )
+  app.get(
+    '/admin/restaurants/create',
+    authenticatedAdmin,
+    adminController.createRestaurant
+  )
+  app.post(
+    '/admin/restaurants',
+    authenticatedAdmin,
+    adminController.postRestaurants
+  )
 
+  // signin & signup
   app.get('/signup', userController.signUpPage)
   app.get('/signin', userController.signInPage)
   app.get('/logout', userController.logout)
