@@ -3,8 +3,8 @@ const db = require('../models')
 const User = db.User
 
 const userController = {
-  signupPage: (req, res) => res.render('signup'),
-  signup: (req, res) => {
+  signUpPage: (req, res) => res.render('signup'),
+  signUp: (req, res) => {
     const { name, email, password, passwordCheck } = req.body
 
     if (password !== passwordCheck) {
@@ -31,6 +31,16 @@ const userController = {
         })
         .catch((error) => console.log(error))
     }
+  },
+  signInPage: (req, res) => res.render('signin'),
+  signIn: (req, res) => {
+    req.flash('success_messages', '成功登入！')
+    res.redirect('/restaurants')
+  },
+  logout: (req, res) => {
+    req.flash('success_messages', '成功登出！')
+    req.logout()
+    res.redirect('/signin')
   }
 }
 
