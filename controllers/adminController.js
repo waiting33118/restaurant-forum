@@ -9,6 +9,14 @@ const adminController = {
       })
       .catch((error) => console.log(error))
   },
+  getRestaurant: (req, res) => {
+    const { id } = req.params
+    Restaurant.findByPk(id, { raw: true })
+      .then((restaurant) => {
+        res.render('admin/restaurant', { restaurant })
+      })
+      .catch((error) => console.log(error))
+  },
   createRestaurant: (req, res) => {
     res.render('admin/create')
   },
@@ -27,6 +35,38 @@ const adminController = {
     })
       .then((restaurant) => {
         req.flash('success_messages', `已成功建立"${restaurant.name}"餐廳！`)
+        res.redirect('/admin/restaurants')
+      })
+      .catch((error) => console.log(error))
+  },
+  editRestaurant: (req, res) => {
+    const { id } = req.params
+    Restaurant.findByPk(id, { raw: true }).then((restaurant) => {
+      res.render('admin/create', { restaurant })
+    })
+  },
+  putRestaurant: (req, res) => {
+    const { name, tel, address, openingHours, description } = req.body
+    const { id } = req.params
+    if (!name) {
+      req.flash('error_messages', '名稱為必填！')
+      return res.redirect('back')
+    }
+    Restaurant.findByPk(id, { raw: true })
+      .then(() => {
+        Restaurant.update(
+          {
+            name,
+            tel,
+            address,
+            openingHours,
+            description
+          },
+          { where: { id } }
+        ).catch((error) => console.log(error))
+      })
+      .then(() => {
+        req.flash('success_messages', '已成功修改餐廳明細！')
         res.redirect('/admin/restaurants')
       })
       .catch((error) => console.log(error))
