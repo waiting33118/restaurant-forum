@@ -3,8 +3,8 @@ const exphdbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const flash = require('connect-flash')
+const override = require('method-override')
 
-const db = require('./models')
 const useRoutes = require('./routes')
 const passport = require('./config/passport')
 
@@ -14,6 +14,7 @@ const PORT = 3000
 app.engine('handlebars', exphdbs())
 app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(override('_method'))
 app.use(
   session({ secret: 'ThisIsMySecret', resave: false, saveUninitialized: false })
 )
