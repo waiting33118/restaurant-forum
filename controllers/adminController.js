@@ -1,5 +1,6 @@
-const fs = require('fs')
 const db = require('../models')
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = 'e20d4219335a0f4'
 const Restaurant = db.Restaurant
 
 const adminController = {
@@ -30,26 +31,25 @@ const adminController = {
       return res.redirect('back')
     }
     if (file) {
-      fs.readFile(file.path, (err, data) => {
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      imgur.upload(file.path, (err, img) => {
         if (err) console.log('Error', err)
-        fs.writeFile(`upload/${file.originalname}`, data, () => {
-          Restaurant.create({
-            name,
-            tel,
-            address,
-            openingHours,
-            description,
-            image: file ? `/upload/${file.originalname}` : null
-          })
-            .then((restaurant) => {
-              req.flash(
-                'success_messages',
-                `已成功建立"${restaurant.name}"餐廳！`
-              )
-              res.redirect('/admin/restaurants')
-            })
-            .catch((error) => console.log(error))
+        Restaurant.create({
+          name,
+          tel,
+          address,
+          openingHours,
+          description,
+          image: file ? img.data.link : null
         })
+          .then((restaurant) => {
+            req.flash(
+              'success_messages',
+              `已成功建立"${restaurant.name}"餐廳！`
+            )
+            res.redirect('/admin/restaurants')
+          })
+          .catch((error) => console.log(error))
       })
     } else {
       Restaurant.create({
@@ -83,31 +83,28 @@ const adminController = {
       return res.redirect('back')
     }
     if (file) {
-      fs.readFile(file.path, (err, data) => {
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      imgur.upload(file.path, (err, img) => {
         if (err) console.log('Error', err)
-        fs.writeFile(`upload/${file.originalname}`, data, () => {
-          Restaurant.findByPk(id, { raw: true })
-            .then((restaurant) => {
-              Restaurant.update(
-                {
-                  name,
-                  tel,
-                  address,
-                  openingHours,
-                  description,
-                  image: file
-                    ? `/upload/${file.originalname}`
-                    : restaurant.image
-                },
-                { where: { id } }
-              ).catch((error) => console.log(error))
-            })
-            .then(() => {
-              req.flash('success_messages', '已成功修改餐廳明細！')
-              res.redirect('/admin/restaurants')
-            })
-            .catch((error) => console.log(error))
-        })
+        Restaurant.findByPk(id, { raw: true })
+          .then((restaurant) => {
+            Restaurant.update(
+              {
+                name,
+                tel,
+                address,
+                openingHours,
+                description,
+                image: file ? img.data.link : restaurant.image
+              },
+              { where: { id } }
+            ).catch((error) => console.log(error))
+          })
+          .then(() => {
+            req.flash('success_messages', '已成功修改餐廳明細！')
+            res.redirect('/admin/restaurants')
+          })
+          .catch((error) => console.log(error))
       })
     } else {
       Restaurant.findByPk(id, { raw: true })
