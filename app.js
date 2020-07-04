@@ -10,7 +10,7 @@ const useRoutes = require('./routes')
 const passport = require('./config/passport')
 
 const app = express()
-const PORT = 3000
+const PORT = process.env.PORT || 3000
 
 app.engine('handlebars', exphdbs())
 app.set('view engine', 'handlebars')
