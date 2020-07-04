@@ -146,21 +146,16 @@ const adminController = {
   putUsers: (req, res) => {
     const { id } = req.params
 
-    User.findByPk(id, { raw: true })
+    User.findByPk(id)
       .then((user) => {
-        if (req.user.id === Number(id)) {
+        if (req.user.id === Number(user.id)) {
           req.flash('error_messages', '管理員無法變更自己的權限！')
           return res.redirect('/admin/users')
         }
         if (user.isAdmin) {
-          User.update(
-            {
-              isAdmin: false
-            },
-            { where: { id } }
-          )
+          user.update({ isAdmin: false })
         } else {
-          User.update({ isAdmin: true }, { where: { id } })
+          user.update({ isAdmin: true })
         }
         req.flash('success_messages', '已成功修改會員權限！')
         res.redirect('/admin/users')
