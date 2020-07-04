@@ -7,7 +7,7 @@ const adminController = {
   getRestaurants: (req, res) => {
     Restaurant.findAll({ raw: true, nest: true })
       .then((restaurants) => {
-        res.render('admin/home', { restaurants })
+        res.render('admin/restaurants', { restaurants })
       })
       .catch((error) => console.log(error))
   },
