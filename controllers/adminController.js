@@ -6,7 +6,7 @@ const User = db.User
 
 const adminController = {
   getRestaurants: (req, res) => {
-    Restaurant.findAll({ raw: true, nest: true })
+    Restaurant.findAll({ raw: true, nest: true, order: [['id', 'ASC']] })
       .then((restaurants) => {
         res.render('admin/restaurants', { restaurants })
       })
@@ -139,7 +139,7 @@ const adminController = {
       .catch((error) => console.log(error))
   },
   getUsers: (req, res) => {
-    User.findAll({ raw: true, nest: true })
+    User.findAll({ raw: true, nest: true, order: [['id', 'ASC']] })
       .then((users) => res.render('admin/users', { users }))
       .catch((error) => console.log(error))
   },
