@@ -63,6 +63,10 @@ module.exports = (app, passport) => {
     adminController.deleteRestaurant
   )
 
+  // user
+  app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
+  app.put('/admin/users/:id', authenticatedAdmin, adminController.putUsers)
+
   // signin & signup
   app.get('/signup', userController.signUpPage)
   app.get('/signin', userController.signInPage)

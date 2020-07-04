@@ -2,6 +2,7 @@ const db = require('../models')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = 'e20d4219335a0f4'
 const Restaurant = db.Restaurant
+const User = db.User
 
 const adminController = {
   getRestaurants: (req, res) => {
@@ -134,6 +135,35 @@ const adminController = {
       .then((restaurant) => {
         restaurant.destroy()
         res.redirect('/admin/restaurants')
+      })
+      .catch((error) => console.log(error))
+  },
+  getUsers: (req, res) => {
+    User.findAll({ raw: true, nest: true })
+      .then((users) => res.render('admin/users', { users }))
+      .catch((error) => console.log(error))
+  },
+  putUsers: (req, res) => {
+    const { id } = req.params
+
+    User.findByPk(id, { raw: true })
+      .then((user) => {
+        if (req.user.id === Number(id)) {
+          req.flash('error_messages', '管理員無法變更自己的權限！')
+          return res.redirect('/admin/users')
+        }
+        if (user.isAdmin) {
+          User.update(
+            {
+              isAdmin: false
+            },
+            { where: { id } }
+          )
+        } else {
+          User.update({ isAdmin: true }, { where: { id } })
+        }
+        req.flash('success_messages', '已成功修改會員權限！')
+        res.redirect('/admin/users')
       })
       .catch((error) => console.log(error))
   }
