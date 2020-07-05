@@ -69,6 +69,10 @@ npm run dev
 npm start
 ```
 
+#### 進入專案
+
+[http://localhost:3000](http://localhost:3000)
+
 #### 預設測試帳號 Default Testing Account
 
 ```
