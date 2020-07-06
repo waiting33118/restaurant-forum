@@ -4,7 +4,7 @@ const Category = db.Category
 const categoryController = {
   getCategories: (req, res) => {
     const { id } = req.params
-    Category.findAll({ raw: true, nest: true })
+    Category.findAll({ raw: true, nest: true, order: [['id', 'ASC']] })
       .then((categories) => {
         if (id) {
           Category.findByPk(id, { raw: true })
