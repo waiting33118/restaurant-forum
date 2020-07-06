@@ -6,11 +6,14 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const override = require('method-override')
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 const useRoutes = require('./routes')
 const passport = require('./config/passport')
 
 const app = express()
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT
 
 app.engine(
   'handlebars',
@@ -21,7 +24,11 @@ app.use('/upload', express.static(path.join(__dirname, '/upload')))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(override('_method'))
 app.use(
-  session({ secret: 'ThisIsMySecret', resave: false, saveUninitialized: false })
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
+  })
 )
 app.use(passport.initialize())
 app.use(passport.session())

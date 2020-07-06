@@ -1,6 +1,5 @@
 const db = require('../models')
 const imgur = require('imgur-node-api')
-const IMGUR_CLIENT_ID = 'e20d4219335a0f4'
 const Restaurant = db.Restaurant
 const Category = db.Category
 const User = db.User
@@ -43,7 +42,7 @@ const adminController = {
       return res.redirect('back')
     }
     if (file) {
-      imgur.setClientID(IMGUR_CLIENT_ID)
+      imgur.setClientID(process.env.IMGUR_CLIENT_ID)
       imgur.upload(file.path, (err, img) => {
         if (err) console.log('Error', err)
         Restaurant.create({
@@ -110,7 +109,7 @@ const adminController = {
       return res.redirect('back')
     }
     if (file) {
-      imgur.setClientID(IMGUR_CLIENT_ID)
+      imgur.setClientID(process.env.IMGUR_CLIENT_ID)
       imgur.upload(file.path, (err, img) => {
         if (err) console.log('Error', err)
         Restaurant.findByPk(id)
