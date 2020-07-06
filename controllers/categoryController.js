@@ -8,9 +8,9 @@ const categoryController = {
       .then((categories) => {
         if (id) {
           Category.findByPk(id, { raw: true })
-            .then((category) => {
+            .then((category) =>
               res.render('admin/categories', { categories, category })
-            })
+            )
             .catch((error) => console.log(error))
         } else {
           res.render('admin/categories', { categories })
@@ -24,12 +24,8 @@ const categoryController = {
       req.flash('error_messages', '餐廳種類欄位不得為空白！')
       res.redirect('back')
     } else {
-      Category.create({
-        name
-      })
-        .then(() => {
-          res.redirect('/admin/categories')
-        })
+      Category.create({ name })
+        .then(() => res.redirect('/admin/categories'))
         .catch((error) => console.log(error))
     }
   },
@@ -41,12 +37,17 @@ const categoryController = {
       res.redirect('back')
     } else {
       Category.findByPk(id)
-        .then((category) => {
-          category.update({ name })
-          res.redirect('/admin/categories')
-        })
+        .then((category) => category.update({ name }))
+        .then(() => res.redirect('/admin/categories'))
         .catch((error) => console.log(error))
     }
+  },
+  deleteCategories: (req, res) => {
+    const { id } = req.params
+    Category.findByPk(id)
+      .then((category) => category.destroy())
+      .then(() => res.redirect('/admin/categories'))
+      .catch((error) => console.log(error))
   }
 }
 
