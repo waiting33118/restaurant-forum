@@ -57,6 +57,12 @@ npx sequelize db:migrate
 npx sequelize db:seed:all
 ```
 
+#### 修改環境變數 (請將 .env.example 檔案改為 .env)
+
+```
+IMGUR_CLIENT_ID = 填入您的imgur client ID
+```
+
 #### 使用 nodemon 啟動伺服器
 
 ```
@@ -91,6 +97,7 @@ password:  12345678
 "bcryptjs": "^2.4.3",
 "body-parser": "^1.19.0",
 "connect-flash": "^0.1.1",
+"dotenv": "^8.2.0",
 "express": "^4.17.1",
 "express-handlebars": "^4.0.4",
 "express-session": "^1.17.1",
