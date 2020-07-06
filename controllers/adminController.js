@@ -27,10 +27,21 @@ const adminController = {
       .catch((error) => console.log(error))
   },
   createRestaurant: (req, res) => {
-    res.render('admin/create')
+    Category.findAll({ raw: true, nest: true })
+      .then((categories) => {
+        res.render('admin/create', { categories })
+      })
+      .catch((error) => console.log(error))
   },
   postRestaurants: (req, res) => {
-    const { name, tel, address, openingHours, description } = req.body
+    const {
+      name,
+      tel,
+      address,
+      openingHours,
+      description,
+      categoryId
+    } = req.body
     const { file } = req
 
     if (!name) {
@@ -47,7 +58,8 @@ const adminController = {
           address,
           openingHours,
           description,
-          image: file ? img.data.link : null
+          image: file ? img.data.link : null,
+          CategoryId: categoryId
         })
           .then((restaurant) => {
             req.flash(
@@ -65,7 +77,8 @@ const adminController = {
         address,
         openingHours,
         description,
-        image: null
+        image: null,
+        CategoryId: categoryId
       })
         .then((restaurant) => {
           req.flash('success_messages', `已成功建立"${restaurant.name}"餐廳！`)
@@ -76,12 +89,25 @@ const adminController = {
   },
   editRestaurant: (req, res) => {
     const { id } = req.params
-    Restaurant.findByPk(id, { raw: true }).then((restaurant) => {
-      res.render('admin/create', { restaurant })
-    })
+    Category.findAll({ raw: true, nest: true })
+      .then((categories) => {
+        Restaurant.findByPk(id, { raw: true })
+          .then((restaurant) => {
+            res.render('admin/create', { restaurant, categories })
+          })
+          .catch((error) => console.log(error))
+      })
+      .catch((error) => console.log(error))
   },
   putRestaurant: (req, res) => {
-    const { name, tel, address, openingHours, description } = req.body
+    const {
+      name,
+      tel,
+      address,
+      openingHours,
+      description,
+      categoryId
+    } = req.body
     const { id } = req.params
     const { file } = req
 
@@ -102,7 +128,8 @@ const adminController = {
                 address,
                 openingHours,
                 description,
-                image: file ? img.data.link : restaurant.image
+                image: file ? img.data.link : restaurant.image,
+                CategoryId: categoryId
               },
               { where: { id } }
             ).catch((error) => console.log(error))
@@ -123,7 +150,8 @@ const adminController = {
               address,
               openingHours,
               description,
-              image: restaurant.image
+              image: restaurant.image,
+              CategoryId: categoryId
             },
             { where: { id } }
           ).catch((error) => console.log(error))

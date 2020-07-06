@@ -12,7 +12,10 @@ const passport = require('./config/passport')
 const app = express()
 const PORT = process.env.PORT || 3000
 
-app.engine('handlebars', exphdbs())
+app.engine(
+  'handlebars',
+  exphdbs({ helpers: require('./config/handlebars-helpers') })
+)
 app.set('view engine', 'handlebars')
 app.use('/upload', express.static(path.join(__dirname, '/upload')))
 app.use(bodyParser.urlencoded({ extended: true }))
