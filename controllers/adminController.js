@@ -13,24 +13,18 @@ const adminController = {
       include: [Category],
       order: [['id', 'ASC']]
     })
-      .then((restaurants) => {
-        res.render('admin/restaurants', { restaurants })
-      })
+      .then((restaurants) => res.render('admin/restaurants', { restaurants }))
       .catch((error) => console.log(error))
   },
   getRestaurant: (req, res) => {
     const { id } = req.params
     Restaurant.findByPk(id, { raw: true, nest: true, include: [Category] })
-      .then((restaurant) => {
-        res.render('admin/restaurant', { restaurant })
-      })
+      .then((restaurant) => res.render('admin/restaurant', { restaurant }))
       .catch((error) => console.log(error))
   },
   createRestaurant: (req, res) => {
     Category.findAll({ raw: true, nest: true })
-      .then((categories) => {
-        res.render('admin/create', { categories })
-      })
+      .then((categories) => res.render('admin/create', { categories }))
       .catch((error) => console.log(error))
   },
   postRestaurants: (req, res) => {
@@ -92,9 +86,9 @@ const adminController = {
     Category.findAll({ raw: true, nest: true })
       .then((categories) => {
         Restaurant.findByPk(id, { raw: true })
-          .then((restaurant) => {
+          .then((restaurant) =>
             res.render('admin/create', { restaurant, categories })
-          })
+          )
           .catch((error) => console.log(error))
       })
       .catch((error) => console.log(error))
@@ -119,10 +113,10 @@ const adminController = {
       imgur.setClientID(IMGUR_CLIENT_ID)
       imgur.upload(file.path, (err, img) => {
         if (err) console.log('Error', err)
-        Restaurant.findByPk(id, { raw: true })
+        Restaurant.findByPk(id)
           .then((restaurant) => {
-            Restaurant.update(
-              {
+            restaurant
+              .update({
                 name,
                 tel,
                 address,
@@ -130,9 +124,8 @@ const adminController = {
                 description,
                 image: file ? img.data.link : restaurant.image,
                 CategoryId: categoryId
-              },
-              { where: { id } }
-            ).catch((error) => console.log(error))
+              })
+              .catch((error) => console.log(error))
           })
           .then(() => {
             req.flash('success_messages', '已成功修改餐廳明細！')
@@ -166,10 +159,8 @@ const adminController = {
   deleteRestaurant: (req, res) => {
     const { id } = req.params
     Restaurant.findByPk(id)
-      .then((restaurant) => {
-        restaurant.destroy()
-        res.redirect('/admin/restaurants')
-      })
+      .then((restaurant) => restaurant.destroy())
+      .then(() => res.redirect('/admin/restaurants'))
       .catch((error) => console.log(error))
   },
   getUsers: (req, res) => {
@@ -179,7 +170,6 @@ const adminController = {
   },
   putUsers: (req, res) => {
     const { id } = req.params
-
     User.findByPk(id)
       .then((user) => {
         if (req.user.id === Number(user.id)) {
