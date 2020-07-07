@@ -30,7 +30,6 @@ const restController = {
         const totalPage = Array.from({ length: pageLength }).map(
           (value, index) => index + 1
         )
-        console.log(totalPage[1])
         const previousPage = currentPage - 1 < 1 ? 1 : currentPage - 1
         const nextPage =
           currentPage + 1 > pageLength ? pageLength : currentPage + 1
