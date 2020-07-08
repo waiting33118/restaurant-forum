@@ -1,0 +1,17 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12 col-md-auto text-center"><img class="rounded-circle shadow-lg" src="{{user.image}}"
+          alt="avatar" width="300px" height="300px">
+      </div>
+      <div class="col-12 col-md-auto text-center text-md-left mt-4 mt-md-0 ml-lg-5">
+        <h1 class="card-title d-md-inline mr-3">{{user.name}} </h1>
+        <h6 class="text-muted mb-3 d-inline">joined {{moment user.createdAt}}</h6>
+        <h4 class="card-subtitle my-3">{{user.email}}</h4>
+        {{#ifCond loginUser.id user.id}}
+        <a class="btn btn-primary" href="/users/me/edit">修改基本資料</a>
+        {{/ifCond}}
+      </div>
+    </div>
+  </div>
+</div>
