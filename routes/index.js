@@ -26,6 +26,11 @@ module.exports = (app, passport) => {
 
   // comment
   app.post('/comments', authenticated, commentController.postComment)
+  app.delete(
+    '/comments/:id',
+    authenticatedAdmin,
+    commentController.deleteComment
+  )
 
   // admin
   app.get('/admin', authenticatedAdmin, (req, res) =>
