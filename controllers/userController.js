@@ -53,7 +53,6 @@ const userController = {
       .then((user) => {
         const data = user.toJSON()
         const totalComments = data.Comments.length
-
         res.render('userProfile', { user: data, totalComments })
       })
       .catch((error) => console.log(error))
