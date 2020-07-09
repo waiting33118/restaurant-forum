@@ -88,6 +88,16 @@ const restController = {
           .catch((error) => console.log(error))
       })
       .catch((error) => console.log(error))
+  },
+  getDashboard: (req, res) => {
+    const { id } = req.params
+    Restaurant.findByPk(id, { include: [Category, Comment] })
+      .then((restaurant) => {
+        const data = restaurant.toJSON()
+        const totalComments = data.Comments.length
+        res.render('dashboard', { restaurant: data, totalComments })
+      })
+      .catch((error) => console.log(error))
   }
 }
 
