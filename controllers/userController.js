@@ -2,6 +2,8 @@ const bcrypt = require('bcryptjs')
 const imgur = require('imgur-node-api')
 const db = require('../models')
 const User = db.User
+const Comment = db.Comment
+const Restaurant = db.Restaurant
 
 const userController = {
   signUpPage: (req, res) => res.render('signup'),
@@ -47,8 +49,13 @@ const userController = {
   getUser: (req, res) => {
     const { id } = req.params
 
-    User.findByPk(id, { raw: true })
-      .then((user) => res.render('userProfile', { user }))
+    User.findByPk(id, { include: { model: Comment, include: [Restaurant] } })
+      .then((user) => {
+        const data = user.toJSON()
+        const totalComments = data.Comments.length
+
+        res.render('userProfile', { user: data, totalComments })
+      })
       .catch((error) => console.log(error))
   },
   editUser: (req, res) => {

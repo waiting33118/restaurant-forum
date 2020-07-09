@@ -8,10 +8,21 @@
         <h1 class="card-title d-md-inline mr-3">{{user.name}} </h1>
         <h6 class="text-muted mb-3 d-inline">joined {{moment user.createdAt}}</h6>
         <h4 class="card-subtitle my-3">{{user.email}}</h4>
+        <h4>已評論 {{totalComments}} 間餐廳</h4>
         {{#ifCond loginUser.id user.id}}
-        <a class="btn btn-primary" href="/users/me/edit">修改基本資料</a>
+        <a class="btn btn-primary mt-5" href="/users/me/edit">修改基本資料</a>
         {{/ifCond}}
       </div>
     </div>
+  </div>
+</div>
+<div class="card mt-4">
+  <div class="card-header">已評論 {{totalComments}} 間餐廳</div>
+  <div class="card-body d-flex flex-wrap justify-content-left">
+    {{#each user.Comments}}
+    <a class="mx-3" href="/restaurants/{{this.Restaurant.id}}">
+      <img src="{{this.Restaurant.image}}" alt="image" width="100" height="100">
+    </a>
+    {{/each}}
   </div>
 </div>
