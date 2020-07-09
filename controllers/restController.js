@@ -62,6 +62,8 @@ const restController = {
       include: [Category, { model: Comment, include: [User] }]
     })
       .then((restaurant) => {
+        restaurant.increment('viewCounts')
+        restaurant.save({ fields: ['viewCounts'] })
         res.render('restaurant', { restaurant: restaurant.toJSON() })
       })
       .catch((error) => console.log(error))
