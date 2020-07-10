@@ -4,6 +4,7 @@ const db = require('../models')
 const User = db.User
 const Comment = db.Comment
 const Restaurant = db.Restaurant
+const Favorite = db.Favorite
 
 const userController = {
   signUpPage: (req, res) => res.render('signup'),
@@ -106,6 +107,25 @@ const userController = {
         )
         .catch((error) => console.log(error))
     }
+  },
+  addFavorite: (req, res) => {
+    Favorite.create({
+      UserId: req.user.id,
+      RestaurantId: req.params.restaurantId
+    })
+      .then(() => res.redirect('back'))
+      .catch((error) => console.log(error))
+  },
+  deleteFavorite: (req, res) => {
+    Favorite.findOne({
+      where: {
+        UserId: req.user.id,
+        RestaurantId: req.params.restaurantId
+      }
+    })
+      .then((favorite) => favorite.destroy())
+      .then(() => res.redirect('back'))
+      .catch((error) => console.log(error))
   }
 }
 

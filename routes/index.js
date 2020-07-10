@@ -38,6 +38,14 @@ module.exports = (app, passport) => {
     commentController.deleteComment
   )
 
+  // favorite
+  app.post('/favorite/:restaurantId', authenticated, userController.addFavorite)
+  app.delete(
+    '/favorite/:restaurantId',
+    authenticated,
+    userController.deleteFavorite
+  )
+
   // admin
   app.get('/admin', authenticatedAdmin, (req, res) =>
     res.redirect('/admin/restaurants')
