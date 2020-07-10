@@ -35,10 +35,13 @@ const restController = {
         const previousPage = currentPage - 1 < 1 ? 1 : currentPage - 1
         const nextPage =
           currentPage + 1 > pageLength ? pageLength : currentPage + 1
+
         const data = restaurants.rows.map((r) => ({
           ...r,
           description: r.description.substring(0, 50),
-          categoryName: r.Category.name
+          isFavorited: req.user.FavoritedRestaurants.map((d) => d.id).includes(
+            r.id
+          )
         }))
         Category.findAll({ raw: true, nest: true })
           .then((categories) =>
@@ -59,12 +62,22 @@ const restController = {
   getRestaurant: (req, res) => {
     const { id } = req.params
     Restaurant.findByPk(id, {
-      include: [Category, { model: Comment, include: [User] }]
+      include: [
+        Category,
+        { model: Comment, include: [User] },
+        { model: User, as: 'FavoritedUsers' }
+      ]
     })
       .then((restaurant) => {
         restaurant.increment('viewCounts')
         restaurant.save({ fields: ['viewCounts'] })
-        res.render('restaurant', { restaurant: restaurant.toJSON() })
+        const isFavorited = restaurant.FavoritedUsers.map((d) => d.id).includes(
+          req.user.id
+        )
+        res.render('restaurant', {
+          restaurant: restaurant.toJSON(),
+          isFavorited
+        })
       })
       .catch((error) => console.log(error))
   },
