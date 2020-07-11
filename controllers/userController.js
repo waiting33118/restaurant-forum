@@ -5,6 +5,7 @@ const User = db.User
 const Comment = db.Comment
 const Restaurant = db.Restaurant
 const Favorite = db.Favorite
+const Like = db.Like
 
 const userController = {
   signUpPage: (req, res) => res.render('signup'),
@@ -124,6 +125,22 @@ const userController = {
       }
     })
       .then((favorite) => favorite.destroy())
+      .then(() => res.redirect('back'))
+      .catch((error) => console.log(error))
+  },
+  like: (req, res) => {
+    Like.create({
+      UserId: req.user.id,
+      RestaurantId: req.params.restaurantId
+    })
+      .then(() => res.redirect('back'))
+      .catch((error) => console.log(error))
+  },
+  unlike: (req, res) => {
+    Like.findOne({
+      where: { UserId: req.user.id, RestaurantId: req.params.restaurantId }
+    })
+      .then((like) => like.destroy())
       .then(() => res.redirect('back'))
       .catch((error) => console.log(error))
   }
