@@ -50,6 +50,14 @@ module.exports = (app, passport) => {
   app.post('/like/:restaurantId', authenticated, userController.like)
   app.delete('/like/:restaurantId', authenticated, userController.unlike)
 
+  // following
+  app.post('/following/:userId', authenticated, userController.addFollowing)
+  app.delete(
+    '/following/:userId',
+    authenticated,
+    userController.removeFollowing
+  )
+
   // admin
   app.get('/admin', authenticatedAdmin, (req, res) =>
     res.redirect('/admin/restaurants')
