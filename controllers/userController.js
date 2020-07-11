@@ -80,32 +80,25 @@ const userController = {
       imgur.setClientID(process.env.IMGUR_CLIENT_ID)
       imgur.upload(file.path, (err, img) => {
         if (err) console.log(err)
-        User.findByPk(id)
-          .then((user) =>
-            user
-              .update({
-                name,
-                image: img.data.link
-              })
-              .catch((error) => console.log(error))
-          )
-          .then(() => {
-            req.flash('success_messages', '已成功修改個人資訊！')
-            res.redirect(`/users/${id}`)
-          })
-          .catch((error) => console.log(error))
+        update(img)
       })
     } else {
+      update()
+    }
+    function update(img) {
       User.findByPk(id)
         .then((user) =>
           user
-            .update({ name, image: user.image })
-            .then(() => {
-              req.flash('success_messages', '已成功修改個人資訊！')
-              res.redirect(`/users/${id}`)
+            .update({
+              name,
+              image: img ? img.data.link : user.image
             })
             .catch((error) => console.log(error))
         )
+        .then(() => {
+          req.flash('success_messages', '已成功修改個人資訊！')
+          res.redirect(`/users/${id}`)
+        })
         .catch((error) => console.log(error))
     }
   },
