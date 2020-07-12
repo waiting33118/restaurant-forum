@@ -63,7 +63,6 @@ const userController = {
         user.FollowingCounts = req.user.Followings.length
         user.Followers = req.user.Followers
         user.FollowerCounts = req.user.Followers.length
-        console.log(user)
         res.render('userProfile', { user })
       })
       .catch((error) => console.log(error))
