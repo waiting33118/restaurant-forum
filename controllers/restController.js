@@ -1,5 +1,4 @@
 const db = require('../models')
-const restaurant = require('../models/restaurant')
 const Restaurant = db.Restaurant
 const Category = db.Category
 const Comment = db.Comment

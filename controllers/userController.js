@@ -54,9 +54,17 @@ const userController = {
 
     User.findByPk(id, { include: { model: Comment, include: [Restaurant] } })
       .then((user) => {
-        const data = user.toJSON()
-        const totalComments = data.Comments.length
-        res.render('userProfile', { user: data, totalComments })
+        user = user.toJSON()
+        user.CommentCounts = user.Comments.length
+        user.Comments = user.Comments.sort((a, b) => b.createdAt - a.createdAt)
+        user.FavoritedRestaurants = req.user.FavoritedRestaurants
+        user.FavoritedCounts = user.FavoritedRestaurants.length
+        user.Followings = req.user.Followings
+        user.FollowingCounts = req.user.Followings.length
+        user.Followers = req.user.Followers
+        user.FollowerCounts = req.user.Followers.length
+        console.log(user)
+        res.render('userProfile', { user })
       })
       .catch((error) => console.log(error))
   },
