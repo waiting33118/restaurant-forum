@@ -12,6 +12,15 @@
 **註冊畫面/RegisterPage**
 ![專案畫面](/public/images/screenshot_2.png)
 
+**餐廳主頁面/RestaurantsPage**
+![專案畫面](/public/images/screenshot_6.png)
+
+**餐廳單一頁面/RestaurantPage**
+![專案畫面](/public/images/screenshot_7.png)
+
+**個人頁面/User Profile**
+![專案畫面](/public/images/screenshot_8.png)
+
 **管理者新增餐廳畫面/Admin Create Restaurant**
 ![專案畫面](/public/images/screenshot_3.png)
 
@@ -104,6 +113,7 @@ password:  12345678
 "faker": "^4.1.0",
 "imgur-node-api": "^0.1.0",
 "method-override": "^3.0.0",
+"moment": "^2.27.0",
 "multer": "^1.4.2",
 "mysql2": "^2.1.0",
 "passport": "^0.4.1",
@@ -115,7 +125,12 @@ password:  12345678
 
 ## 產品功能(User Story)
 
-- 使用者可以**瀏覽**所有的餐廳(In progress...開發中...)
+- 使用者可以**瀏覽**所有的餐廳
+- 使用者可以**瀏覽**最新動態
+- 使用者可以**瀏覽**Top 10 人氣餐廳
+- 使用者可以**瀏覽**美食達人
+- 使用者可以**瀏覽**個人頁面(收藏餐廳、追蹤中、粉絲)
+- 使用者可以**新增**留言
 - 管理者可以**新增**餐廳
 - 管理者可以**修改**餐廳內容
 - 管理者可以**刪除**餐廳
