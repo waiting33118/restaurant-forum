@@ -12,10 +12,9 @@ const adminController = {
     })
   },
   getRestaurant: (req, res) => {
-    const { id } = req.params
-    Restaurant.findByPk(id, { raw: true, nest: true, include: [Category] })
-      .then((restaurant) => res.render('admin/restaurant', { restaurant }))
-      .catch((error) => console.log(error))
+    adminService.getRestaurant(req, res, (restaurant) => {
+      res.render('admin/restaurant', { restaurant })
+    })
   },
   createRestaurant: (req, res) => {
     Category.findAll({ raw: true, nest: true })
