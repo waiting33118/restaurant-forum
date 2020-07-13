@@ -43,4 +43,4 @@ app.use((req, res, next) => {
 app.listen(PORT, () => {
   console.log(`The server is running on PORT:${PORT}`)
 })
-useRoutes(app, passport)
+useRoutes(app)
