@@ -1,15 +1,10 @@
-const db = require('../../models')
-const Restaurant = db.Restaurant
-const Category = db.Category
+const adminService = require('../../services/adminService')
 
 const adminController = {
   getRestaurants: (req, res) => {
-    Restaurant.findAll({
-      include: [Category],
-      order: [['id', 'ASC']]
+    adminService.getRestaurants(req, res, (restaurants) => {
+      res.json({ restaurants })
     })
-      .then((restaurants) => res.json({ restaurants }))
-      .catch((error) => console.log(error))
   }
 }
 
