@@ -117,7 +117,7 @@ router.get(
 router.get(
   '/admin/categories/:id',
   authenticatedAdmin,
-  categoryController.getCategories
+  categoryController.getCategory
 )
 router.post(
   '/admin/categories',
