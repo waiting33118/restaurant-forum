@@ -93,7 +93,7 @@ const userController = {
     } else {
       update()
     }
-    function update(img) {
+    function update (img) {
       User.findByPk(id)
         .then((user) =>
           user
@@ -154,6 +154,7 @@ const userController = {
           isFollowed: req.user.Followings.map((d) => d.id).includes(user.id)
         }))
         users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
+        console.log(users)
         res.render('topUser', { users })
       })
       .catch((error) => console.log(error))
