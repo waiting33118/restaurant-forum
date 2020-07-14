@@ -49,7 +49,7 @@
   {{!-- 收藏過的餐廳 --}}
   <div class="col-md-4">
     <div class="card mt-4">
-      <div class="card-header">已評論 {{user.FavoritedCounts}} 間餐廳</div>
+      <div class="card-header">已收藏 {{user.FavoritedCounts}} 間餐廳</div>
       <div class="card-body d-flex flex-wrap justify-content-left">
         {{#each user.FavoritedRestaurants}}
           <a class="m-1" href="/restaurants/{{this.id}}">
