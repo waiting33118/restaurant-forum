@@ -8,6 +8,9 @@ const categoryController = {
   },
   postCategories: (req, res) => {
     categoryService.postCategories(req, res, result => res.json(result))
+  },
+  putCategories: (req, res) => {
+    categoryService.putCategories(req, res, result => res.json(result))
   }
 }
 

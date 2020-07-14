@@ -25,17 +25,14 @@ const categoryController = {
     })
   },
   putCategories: (req, res) => {
-    const { name } = req.body
-    const { id } = req.params
-    if (!name) {
-      req.flash('error_messages', '餐廳種類欄位不得為空白！')
-      res.redirect('back')
-    } else {
-      Category.findByPk(id)
-        .then((category) => category.update({ name }))
-        .then(() => res.redirect('/admin/categories'))
-        .catch((error) => console.log(error))
-    }
+    categoryService.putCategories(req, res, result => {
+      if (result.status === 'error') {
+        req.flash('error_messages', result.message)
+        return res.redirect('back')
+      }
+      req.flash('success_messages', result.message)
+      res.redirect('/admin/categories')
+    })
   },
   deleteCategories: (req, res) => {
     const { id } = req.params
