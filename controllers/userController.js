@@ -55,6 +55,8 @@ const userController = {
     User.findByPk(id, { include: { model: Comment, include: [Restaurant] } })
       .then((user) => {
         user = user.toJSON()
+        const set = new Set()
+        user.Comments = user.Comments.filter(c => !set.has(c.RestaurantId) ? set.add(c.RestaurantId) : false)
         user.CommentCounts = user.Comments.length
         user.Comments = user.Comments.sort((a, b) => b.createdAt - a.createdAt)
         user.FavoritedRestaurants = req.user.FavoritedRestaurants
