@@ -154,18 +154,22 @@ const userController = {
           isFollowed: req.user.Followings.map((d) => d.id).includes(user.id)
         }))
         users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-        console.log(users)
         res.render('topUser', { users })
       })
       .catch((error) => console.log(error))
   },
   addFollowing: (req, res) => {
-    Followship.create({
-      followerId: req.user.id,
-      followingId: req.params.userId
-    })
-      .then(() => res.redirect('back'))
-      .catch((error) => console.log(error))
+    if (req.user.id === Number(req.params.userId)) {
+      req.flash('error_messages', '無法追蹤自己')
+      res.redirect('back')
+    } else {
+      Followship.create({
+        followerId: req.user.id,
+        followingId: req.params.userId
+      })
+        .then(() => res.redirect('back'))
+        .catch((error) => console.log(error))
+    }
   },
   removeFollowing: (req, res) => {
     Followship.findOne({
