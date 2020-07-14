@@ -1,4 +1,4 @@
-// const imgur = require('imgur-node-api')
+const imgur = require('imgur-node-api')
 
 const db = require('../models')
 const Restaurant = db.Restaurant
@@ -13,8 +13,8 @@ const adminService = {
       include: [Category],
       order: [['id', 'ASC']]
     })
-      .then((restaurants) => callback(restaurants))
-      .catch((error) => console.log(error))
+      .then(restaurants => callback(restaurants))
+      .catch(error => console.log(error))
   },
   getRestaurant: (req, res, callback) => {
     Restaurant.findByPk(req.params.id, {
@@ -22,14 +22,57 @@ const adminService = {
       nest: true,
       include: [Category]
     })
-      .then((restaurant) => callback(restaurant))
-      .catch((error) => console.log(error))
+      .then(restaurant => callback(restaurant))
+      .catch(error => console.log(error))
   },
   deleteRestaurant: (req, res, callback) => {
     Restaurant.findByPk(req.params.id)
-      .then((restaurant) => restaurant.destroy())
+      .then(restaurant => restaurant.destroy())
       .then(() => callback({ status: 'success', message: '' }))
-      .catch((error) => console.log(error))
+      .catch(error => console.log(error))
+  },
+  postRestaurants: (req, res, callback) => {
+    const {
+      name,
+      tel,
+      address,
+      openingHours,
+      description,
+      categoryId
+    } = req.body
+    const { file } = req
+
+    if (!name) {
+      return callback({ status: 'error', message: '名稱為必填！' })
+    }
+    if (file) {
+      imgur.setClientID(process.env.IMGUR_CLIENT_ID)
+      imgur.upload(file.path, (err, img) => {
+        if (err) console.log(err)
+        createRestaurant(img)
+      })
+    } else {
+      createRestaurant()
+    }
+
+    function createRestaurant (img) {
+      Restaurant.create({
+        name,
+        tel,
+        address,
+        openingHours,
+        description,
+        image: img ? img.data.link : null,
+        CategoryId: categoryId
+      })
+        .then(restaurant => {
+          callback({
+            status: 'success',
+            message: `已成功建立"${restaurant.name}"餐廳！`
+          })
+        })
+        .catch(error => console.log(error))
+    }
   }
 }
 

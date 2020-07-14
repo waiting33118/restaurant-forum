@@ -22,6 +22,7 @@ app.engine(
 app.set('view engine', 'handlebars')
 app.use('/upload', express.static(path.join(__dirname, '/upload')))
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 app.use(override('_method'))
 app.use(
   session({
