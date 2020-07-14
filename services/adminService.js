@@ -73,6 +73,51 @@ const adminService = {
         })
         .catch(error => console.log(error))
     }
+  },
+  putRestaurant: (req, res, callback) => {
+    const {
+      name,
+      tel,
+      address,
+      openingHours,
+      description,
+      categoryId
+    } = req.body
+    const { file } = req
+
+    if (!name) {
+      return callback({ status: 'error', message: '名稱為必填！' })
+    }
+    if (file) {
+      imgur.setClientID(process.env.IMGUR_CLIENT_ID)
+      imgur.upload(file.path, (err, img) => {
+        if (err) console.log(err)
+        updateRestaurant(img)
+      })
+    } else {
+      updateRestaurant()
+    }
+
+    function updateRestaurant (img) {
+      Restaurant.findByPk(req.params.id)
+        .then(restaurant => {
+          restaurant
+            .update({
+              name,
+              tel,
+              address,
+              openingHours,
+              description,
+              image: img ? img.data.link : restaurant.image,
+              CategoryId: categoryId
+            })
+            .catch(error => console.log(error))
+        })
+        .then(() => {
+          callback({ status: 'success', message: '已成功修改餐廳明細！' })
+        })
+        .catch(error => console.log(error))
+    }
   }
 }
 

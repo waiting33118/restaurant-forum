@@ -6,14 +6,14 @@ const adminService = require('../services/adminService')
 
 const adminController = {
   getRestaurants: (req, res) => {
-    adminService.getRestaurants(req, res, restaurants => {
+    adminService.getRestaurants(req, res, restaurants =>
       res.render('admin/restaurants', { restaurants })
-    })
+    )
   },
   getRestaurant: (req, res) => {
-    adminService.getRestaurant(req, res, restaurant => {
+    adminService.getRestaurant(req, res, restaurant =>
       res.render('admin/restaurant', { restaurant })
-    })
+    )
   },
   deleteRestaurant: (req, res) => {
     adminService.deleteRestaurant(req, res, result => {
@@ -48,67 +48,14 @@ const adminController = {
       .catch(error => console.log(error))
   },
   putRestaurant: (req, res) => {
-    const {
-      name,
-      tel,
-      address,
-      openingHours,
-      description,
-      categoryId
-    } = req.body
-    const { id } = req.params
-    const { file } = req
-
-    if (!name) {
-      req.flash('error_messages', '名稱為必填！')
-      return res.redirect('back')
-    }
-    if (file) {
-      imgur.setClientID(process.env.IMGUR_CLIENT_ID)
-      imgur.upload(file.path, (err, img) => {
-        if (err) console.log('Error', err)
-        Restaurant.findByPk(id)
-          .then(restaurant => {
-            restaurant
-              .update({
-                name,
-                tel,
-                address,
-                openingHours,
-                description,
-                image: file ? img.data.link : restaurant.image,
-                CategoryId: categoryId
-              })
-              .catch(error => console.log(error))
-          })
-          .then(() => {
-            req.flash('success_messages', '已成功修改餐廳明細！')
-            res.redirect('/admin/restaurants')
-          })
-          .catch(error => console.log(error))
-      })
-    } else {
-      Restaurant.findByPk(id, { raw: true })
-        .then(restaurant => {
-          Restaurant.update(
-            {
-              name,
-              tel,
-              address,
-              openingHours,
-              description,
-              image: restaurant.image,
-              CategoryId: categoryId
-            },
-            { where: { id } }
-          ).catch(error => console.log(error))
-        })
-        .then(() => {
-          req.flash('success_messages', '已成功修改餐廳明細！')
-          res.redirect('/admin/restaurants')
-        })
-        .catch(error => console.log(error))
-    }
+    adminService.putRestaurant(req, res, result => {
+      if (result.status === 'error') {
+        req.flash('error_messages', result.message)
+        return res.redirect('back')
+      }
+      req.flash('success_messages', result.message)
+      res.redirect('/admin/restaurants')
+    })
   },
   getUsers: (req, res) => {
     User.findAll({ raw: true, nest: true, order: [['id', 'ASC']] })

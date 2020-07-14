@@ -10,6 +10,7 @@ const categoryController = require('../controllers/api/categoryController')
 router.get('/admin/restaurants', adminController.getRestaurants)
 router.get('/admin/restaurant/:id', adminController.getRestaurant)
 router.post('/admin/restaurants', upload.single('image'), adminController.postRestaurants)
+router.put('/admin/restaurant/:id', upload.single('image'), adminController.putRestaurant)
 router.delete('/admin/restaurant/:id', adminController.deleteRestaurant)
 
 // category
