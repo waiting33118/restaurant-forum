@@ -13,7 +13,7 @@
         <h4>{{user.FollowingCounts}} 位追蹤中</h4>
         <h4>{{user.FollowerCounts}} 位粉絲</h4>
         {{#ifCond loginUser.id user.id}}
-        <a class="btn btn-primary mt-5" href="/users/me/edit">修改基本資料</a>
+          <a class="btn btn-primary mt-5" href="/users/me/edit">修改基本資料</a>
         {{/ifCond}}
       </div>
     </div>
@@ -26,9 +26,9 @@
       <div class="card-header">已評論 {{user.CommentCounts}} 間餐廳</div>
       <div class="card-body d-flex flex-wrap justify-content-around">
         {{#each user.Comments}}
-        <a class="m-1" href="/restaurants/{{this.Restaurant.id}}">
-          <img class="rounded" src="{{this.Restaurant.image}}" alt="image" width="90" height="90">
-        </a>
+          <a class="m-1" href="/restaurants/{{this.Restaurant.id}}">
+            <img class="rounded" src="{{this.Restaurant.image}}" alt="image" width="90" height="90">
+          </a>
         {{/each}}
       </div>
     </div>
@@ -39,9 +39,9 @@
       <div class="card-header">已評論 {{user.FavoritedCounts}} 間餐廳</div>
       <div class="card-body d-flex flex-wrap justify-content-around">
         {{#each user.FavoritedRestaurants}}
-        <a class="m-1" href="/restaurants/{{this.id}}">
-          <img class="rounded" src="{{this.image}}" alt="image" width="90" height="90">
-        </a>
+          <a class="m-1" href="/restaurants/{{this.id}}">
+            <img class="rounded" src="{{this.image}}" alt="image" width="90" height="90">
+          </a>
         {{/each}}
       </div>
     </div>
@@ -52,9 +52,9 @@
       <div class="card-header">{{user.FollowingCounts}} 位追蹤中</div>
       <div class="card-body d-flex flex-wrap justify-content-around">
         {{#each user.Followings}}
-        <a class="m-1" href="/users/{{this.id}}">
-          <img class="rounded" src="{{this.image}}" alt="image" width="90" height="90">
-        </a>
+          <a class="m-1" href="/users/{{this.id}}">
+            <img class="rounded" src="{{this.image}}" alt="image" width="90" height="90">
+          </a>
         {{/each}}
       </div>
     </div>
@@ -65,9 +65,9 @@
       <div class="card-header">{{user.FollowerCounts}} 位粉絲</div>
       <div class="card-body d-flex flex-wrap justify-content-around">
         {{#each user.Followers}}
-        <a class="m-1" href="/users/{{this.id}}">
-          <img class="rounded" src="{{this.image}}" alt="image" width="90" height="90">
-        </a>
+          <a class="m-1" href="/users/{{this.id}}">
+            <img class="rounded" src="{{this.image}}" alt="image" width="90" height="90">
+          </a>
         {{/each}}
       </div>
     </div>

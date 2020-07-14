@@ -7,16 +7,16 @@
 
 <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded shadow-sm">
   {{#if category}}
-  <form action="/admin/categories/{{category.id}}?_method=PUT" method="POST" class="form-inline">
-    <input type="text" class="form-control mr-2" placeholder="新增餐廳種類..." name="name" value="{{category.name}}">
-    <button type="submit" class="btn btn-primary">Update</button>
-    <a href="/admin/categories"><span class="ml-2">取消修改</span></a>
-  </form>
+    <form action="/admin/categories/{{category.id}}?_method=PUT" method="POST" class="form-inline">
+      <input type="text" class="form-control mr-2" placeholder="新增餐廳種類..." name="name" value="{{category.name}}">
+      <button type="submit" class="btn btn-primary">Update</button>
+      <a href="/admin/categories"><span class="ml-2">取消修改</span></a>
+    </form>
   {{else}}
-  <form action="/admin/categories" method="POST" class="form-inline">
-    <input type="text" class="form-control mr-2" placeholder="新增餐廳種類..." name="name">
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
+    <form action="/admin/categories" method="POST" class="form-inline">
+      <input type="text" class="form-control mr-2" placeholder="新增餐廳種類..." name="name">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
   {{/if}}
 </div>
 <table class="table">
@@ -29,20 +29,20 @@
   </thead>
   <tbody>
     {{#each categories}}
-    <tr>
-      <th scope="row">{{this.id}}</th>
-      <td>{{this.name}}</td>
-      <td>
-        <button type="button" class="btn btn-link">
-          <a href="/admin/categories/{{this.id}}">
-            Edit
-          </a>
-        </button>
-        <form action="/admin/categories/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
-          <button type="submit" class="btn btn-link">Delete</button>
-        </form>
-      </td>
-    </tr>
+      <tr>
+        <th scope="row">{{this.id}}</th>
+        <td>{{this.name}}</td>
+        <td>
+          <button type="button" class="btn btn-link">
+            <a href="/admin/categories/{{this.id}}">
+              Edit
+            </a>
+          </button>
+          <form action="/admin/categories/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+            <button type="submit" class="btn btn-link">Delete</button>
+          </form>
+        </td>
+      </tr>
     {{/each}}
   </tbody>
 </table>
