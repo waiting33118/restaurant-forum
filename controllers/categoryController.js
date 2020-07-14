@@ -15,15 +15,14 @@ const categoryController = {
       .catch((error) => console.log(error))
   },
   postCategories: (req, res) => {
-    const { name } = req.body
-    if (!name) {
-      req.flash('error_messages', '餐廳種類欄位不得為空白！')
-      res.redirect('back')
-    } else {
-      Category.create({ name })
-        .then(() => res.redirect('/admin/categories'))
-        .catch((error) => console.log(error))
-    }
+    categoryService.postCategories(req, res, result => {
+      if (result.status === 'error') {
+        req.flash('error_messages', result.message)
+        return res.redirect('back')
+      }
+      req.flash('success_messages', result.message)
+      res.redirect('/admin/categories')
+    })
   },
   putCategories: (req, res) => {
     const { name } = req.body

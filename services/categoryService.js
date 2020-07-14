@@ -10,6 +10,16 @@ const categoryService = {
     })
       .then((categories) => callback(categories))
       .catch((error) => console.log(error))
+  },
+  postCategories: (req, res, callback) => {
+    const { name } = req.body
+    if (!name) {
+      callback({ status: 'error', message: '餐廳種類欄位不得為空白！' })
+    } else {
+      Category.create({ name })
+        .then((category) => callback({ status: 'success', message: `成功建立"${category.name}"種類` }))
+        .catch((error) => console.log(error))
+    }
   }
 }
 
