@@ -31,6 +31,12 @@ const categoryService = {
         .then(() => callback({ status: 'success', message: '餐廳種類更新成功！' }))
         .catch((error) => console.log(error))
     }
+  },
+  deleteCategories: (req, res, callback) => {
+    Category.findByPk(req.params.id)
+      .then((category) => category.destroy())
+      .then(() => callback({ status: 'success', message: '' }))
+      .catch((error) => console.log(error))
   }
 }
 
