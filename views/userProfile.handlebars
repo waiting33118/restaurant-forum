@@ -20,53 +20,54 @@
   </div>
 </div>
 <div class="row">
+  {{!-- 追蹤中 --}}
+  <div class="col-md-4">
+    <div class="card mt-4">
+      <div class="card-header">{{user.FollowingCounts}} 位追蹤中</div>
+      <div class="card-body d-flex flex-wrap justify-content-left">
+        {{#each user.Followings}}
+          <a class="m-1" href="/users/{{this.id}}">
+            <img class="rounded" src="{{this.image}}" alt="image" width="60" height="60">
+          </a>
+        {{/each}}
+      </div>
+    </div>
+  </div>
   {{!-- 評論過的餐廳 --}}
-  <div class="col-12">
+  <div class="col-md-8">
     <div class="card mt-4">
       <div class="card-header">已評論 {{user.CommentCounts}} 間餐廳</div>
-      <div class="card-body d-flex flex-wrap justify-content-around">
+      <div class="card-body d-flex flex-wrap justify-content-left">
         {{#each user.Comments}}
           <a class="m-1" href="/restaurants/{{this.Restaurant.id}}">
-            <img class="rounded" src="{{this.Restaurant.image}}" alt="image" width="90" height="90">
+            <img class="rounded" src="{{this.Restaurant.image}}" alt="image" width="60" height="60">
           </a>
         {{/each}}
       </div>
     </div>
   </div>
   {{!-- 收藏過的餐廳 --}}
-  <div class="col-12">
+  <div class="col-md-4">
     <div class="card mt-4">
       <div class="card-header">已評論 {{user.FavoritedCounts}} 間餐廳</div>
-      <div class="card-body d-flex flex-wrap justify-content-around">
+      <div class="card-body d-flex flex-wrap justify-content-left">
         {{#each user.FavoritedRestaurants}}
           <a class="m-1" href="/restaurants/{{this.id}}">
-            <img class="rounded" src="{{this.image}}" alt="image" width="90" height="90">
+            <img class="rounded" src="{{this.image}}" alt="image" width="60" height="60">
           </a>
         {{/each}}
       </div>
     </div>
   </div>
-  {{!-- 追蹤中 --}}
-  <div class="col-12">
-    <div class="card mt-4">
-      <div class="card-header">{{user.FollowingCounts}} 位追蹤中</div>
-      <div class="card-body d-flex flex-wrap justify-content-around">
-        {{#each user.Followings}}
-          <a class="m-1" href="/users/{{this.id}}">
-            <img class="rounded" src="{{this.image}}" alt="image" width="90" height="90">
-          </a>
-        {{/each}}
-      </div>
-    </div>
-  </div>
+
   {{!-- 粉絲 --}}
-  <div class="col-12">
+  <div class="col-md-8">
     <div class="card mt-4">
       <div class="card-header">{{user.FollowerCounts}} 位粉絲</div>
-      <div class="card-body d-flex flex-wrap justify-content-around">
+      <div class="card-body d-flex flex-wrap justify-content-left">
         {{#each user.Followers}}
           <a class="m-1" href="/users/{{this.id}}">
-            <img class="rounded" src="{{this.image}}" alt="image" width="90" height="90">
+            <img class="rounded" src="{{this.image}}" alt="image" width="60" height="60">
           </a>
         {{/each}}
       </div>
