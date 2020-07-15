@@ -1,11 +1,8 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const passportJWT = require('passport-jwt')
 
 const db = require('../../models')
 const User = db.User
-const ExtractJwt = passportJWT.ExtractJwt
-const JwtStrategy = passportJWT.Strategy
 
 const userController = {
   signIn: (req, res) => {
