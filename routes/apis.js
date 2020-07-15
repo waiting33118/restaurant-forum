@@ -8,7 +8,7 @@ const authenticated = passport.authenticate('jwt', { session: false })
 const authenticatedAdmin = (req, res, next) => {
   if (req.user) {
     if (req.user.isAdmin) return next()
-    return res.json({ status: 'error', message: 'permission denied' })
+    return res.json({ status: 'error', message: 'permission denied: You are not Admin' })
   } else {
     return res.json({ status: 'error', message: 'permission denied' })
   }
@@ -30,7 +30,8 @@ router.post('/admin/categories', authenticated, authenticatedAdmin, categoryCont
 router.put('/admin/categories/:id', authenticated, authenticatedAdmin, categoryController.putCategories)
 router.delete('/admin/categories/:id', authenticated, authenticatedAdmin, categoryController.deleteCategories)
 
-// JWT signin
+// JWT signin/up
 router.post('/signin', userController.signIn)
+router.post('/signup', userController.signUp)
 
 module.exports = router
