@@ -11,6 +11,11 @@ const categoryService = {
       .then((categories) => callback(categories))
       .catch((error) => console.log(error))
   },
+  getCategory: (req, res, callback) => {
+    Category.findByPk(req.params.id, { raw: true })
+      .then((category) => callback(category))
+      .catch((error) => console.log(error))
+  },
   postCategories: (req, res, callback) => {
     const { name } = req.body
     if (!name) {
