@@ -58,9 +58,7 @@ const adminController = {
     })
   },
   getUsers: (req, res) => {
-    User.findAll({ raw: true, nest: true, order: [['id', 'ASC']] })
-      .then(users => res.render('admin/users', { users }))
-      .catch(error => console.log(error))
+    adminService.getUsers(req, res, users => res.render('admin/users', { users }))
   },
   putUsers: (req, res) => {
     const { id } = req.params

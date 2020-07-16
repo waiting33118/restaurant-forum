@@ -3,7 +3,7 @@ const imgur = require('imgur-node-api')
 const db = require('../models')
 const Restaurant = db.Restaurant
 const Category = db.Category
-// const User = db.User
+const User = db.User
 
 const adminService = {
   getRestaurants: (req, res, callback) => {
@@ -118,6 +118,11 @@ const adminService = {
         })
         .catch(error => console.log(error))
     }
+  },
+  getUsers: (req, res, callback) => {
+    User.findAll({ raw: true, nest: true, order: [['id', 'ASC']] })
+      .then(users => callback(users))
+      .catch(error => console.log(error))
   }
 }
 
