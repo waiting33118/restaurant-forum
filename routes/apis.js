@@ -16,6 +16,7 @@ const authenticatedAdmin = (req, res, next) => {
 const adminController = require('../controllers/api/adminController')
 const userController = require('../controllers/api/userController')
 const categoryController = require('../controllers/api/categoryController')
+const commentController = require('../controllers/api/commentController')
 
 // admin - restaurant
 router.get('/admin/restaurants', authenticated, authenticatedAdmin, adminController.getRestaurants)
@@ -40,5 +41,9 @@ router.put('/admin/users/:id', authenticated, authenticatedAdmin, adminControlle
 // JWT signin/up
 router.post('/signin', userController.signIn)
 router.post('/signup', userController.signUp)
+
+// comment
+router.post('/comments', authenticated, commentController.postComment)
+router.delete('/comments/:id', authenticated, authenticatedAdmin, commentController.deleteComment)
 
 module.exports = router
