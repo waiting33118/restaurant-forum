@@ -5,12 +5,7 @@ const commentController = {
     commentService.postComment(req, res, result => res.redirect(`/restaurants/${result.restaurantId}`))
   },
   deleteComment: (req, res) => {
-    const { id } = req.params
-    Comment.findByPk(id)
-      .then((comment) => comment.destroy())
-      .then((comment) => res.redirect(`/restaurants/${comment.RestaurantId}`))
-      .catch((error) => console.log(error))
+    commentService.deleteComment(req, res, result => res.redirect(`/restaurants/${result.RestaurantId}`))
   }
 }
-
 module.exports = commentController
