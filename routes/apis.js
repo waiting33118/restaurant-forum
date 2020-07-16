@@ -44,5 +44,6 @@ router.post('/signup', userController.signUp)
 
 // comment
 router.post('/comments', authenticated, commentController.postComment)
+router.delete('/comments/:id', authenticated, authenticatedAdmin, commentController.deleteComment)
 
 module.exports = router
