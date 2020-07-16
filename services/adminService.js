@@ -123,6 +123,21 @@ const adminService = {
     User.findAll({ raw: true, nest: true, order: [['id', 'ASC']] })
       .then(users => callback(users))
       .catch(error => console.log(error))
+  },
+  putUsers: (req, res, callback) => {
+    User.findByPk(req.params.id)
+      .then(user => {
+        if (req.user.id === Number(user.id)) {
+          return callback({ status: 'error', message: '管理員無法變更自己的權限！' })
+        }
+        if (user.isAdmin) {
+          user.update({ isAdmin: false })
+        } else {
+          user.update({ isAdmin: true })
+        }
+        callback({ status: 'success', message: '已成功修改會員權限！' })
+      })
+      .catch(error => console.log(error))
   }
 }
 
