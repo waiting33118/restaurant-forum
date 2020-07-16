@@ -2,6 +2,7 @@ const db = require('../models')
 const Restaurant = db.Restaurant
 const Category = db.Category
 const adminService = require('../services/adminService')
+const { putRestaurant } = require('./api/adminController')
 
 const adminController = {
   getRestaurants: (req, res) => {
@@ -33,16 +34,7 @@ const adminController = {
     adminService.createRestaurant(req, res, categories => res.render('admin/create', { categories }))
   },
   editRestaurant: (req, res) => {
-    const { id } = req.params
-    Category.findAll({ raw: true, nest: true })
-      .then(categories => {
-        Restaurant.findByPk(id, { raw: true })
-          .then(restaurant =>
-            res.render('admin/create', { restaurant, categories })
-          )
-          .catch(error => console.log(error))
-      })
-      .catch(error => console.log(error))
+    adminService.editRestaurant(req, res, (categories, restaurant) => res.render('admin/create', { categories, restaurant }))
   },
   putRestaurant: (req, res) => {
     adminService.putRestaurant(req, res, result => {
