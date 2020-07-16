@@ -17,6 +17,21 @@ const adminController = {
   },
   putRestaurant: (req, res) => {
     adminService.putRestaurant(req, res, result => res.json(result))
+  },
+  getUsers: (req, res) => {
+    adminService.getUsers(req, res, users => res.json({ users }))
+  },
+  putUsers: (req, res) => {
+    adminService.putUsers(req, res, result => {
+      if (result.status === 'error') return res.json(result)
+      res.json(result)
+    })
+  },
+  createRestaurant: (req, res) => {
+    adminService.createRestaurant(req, res, categories => res.json({ categories }))
+  },
+  editRestaurant: (req, res) => {
+    adminService.editRestaurant(req, res, (categories, restaurant) => res.json({ categories, restaurant }))
   }
 }
 

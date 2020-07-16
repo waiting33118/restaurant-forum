@@ -17,18 +17,24 @@ const adminController = require('../controllers/api/adminController')
 const userController = require('../controllers/api/userController')
 const categoryController = require('../controllers/api/categoryController')
 
-// admin
+// admin - restaurant
 router.get('/admin/restaurants', authenticated, authenticatedAdmin, adminController.getRestaurants)
+router.get('/admin/restaurants/create', authenticated, authenticatedAdmin, adminController.createRestaurant)
 router.get('/admin/restaurant/:id', authenticated, authenticatedAdmin, adminController.getRestaurant)
+router.get('/admin/restaurants/:id/edit', authenticated, authenticatedAdmin, adminController.editRestaurant)
 router.post('/admin/restaurants', authenticated, authenticatedAdmin, upload.single('image'), adminController.postRestaurants)
 router.put('/admin/restaurant/:id', authenticated, authenticatedAdmin, upload.single('image'), adminController.putRestaurant)
 router.delete('/admin/restaurant/:id', authenticated, authenticatedAdmin, adminController.deleteRestaurant)
 
-// category
+// admin - category
 router.get('/admin/categories', authenticated, authenticatedAdmin, categoryController.getCategories)
 router.post('/admin/categories', authenticated, authenticatedAdmin, categoryController.postCategories)
 router.put('/admin/categories/:id', authenticated, authenticatedAdmin, categoryController.putCategories)
 router.delete('/admin/categories/:id', authenticated, authenticatedAdmin, categoryController.deleteCategories)
+
+// admin - user
+router.get('/admin/users', authenticated, authenticatedAdmin, adminController.getUsers)
+router.put('/admin/users/:id', authenticated, authenticatedAdmin, adminController.putUsers)
 
 // JWT signin/up
 router.post('/signin', userController.signIn)

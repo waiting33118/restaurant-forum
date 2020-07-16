@@ -3,7 +3,7 @@ const imgur = require('imgur-node-api')
 const db = require('../models')
 const Restaurant = db.Restaurant
 const Category = db.Category
-// const User = db.User
+const User = db.User
 
 const adminService = {
   getRestaurants: (req, res, callback) => {
@@ -118,6 +118,40 @@ const adminService = {
         })
         .catch(error => console.log(error))
     }
+  },
+  getUsers: (req, res, callback) => {
+    User.findAll({ raw: true, nest: true, order: [['id', 'ASC']] })
+      .then(users => callback(users))
+      .catch(error => console.log(error))
+  },
+  putUsers: (req, res, callback) => {
+    User.findByPk(req.params.id)
+      .then(user => {
+        if (req.user.id === Number(user.id)) {
+          return callback({ status: 'error', message: '管理員無法變更自己的權限！' })
+        }
+        if (user.isAdmin) {
+          user.update({ isAdmin: false })
+        } else {
+          user.update({ isAdmin: true })
+        }
+        callback({ status: 'success', message: '已成功修改會員權限！' })
+      })
+      .catch(error => console.log(error))
+  },
+  createRestaurant: (req, res, callback) => {
+    Category.findAll({ raw: true, nest: true })
+      .then(categories => callback(categories))
+      .catch(error => console.log(error))
+  },
+  editRestaurant: (req, res, callback) => {
+    Category.findAll({ raw: true, nest: true })
+      .then(categories => {
+        Restaurant.findByPk(req.params.id, { raw: true })
+          .then(restaurant => callback(categories, restaurant))
+          .catch(error => console.log(error))
+      })
+      .catch(error => console.log(error))
   }
 }
 
