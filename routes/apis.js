@@ -32,6 +32,7 @@ router.delete('/admin/categories/:id', authenticated, authenticatedAdmin, catego
 
 // admin - user
 router.get('/admin/users', authenticated, authenticatedAdmin, adminController.getUsers)
+router.put('/admin/users/:id', authenticated, authenticatedAdmin, adminController.putUsers)
 
 // JWT signin/up
 router.post('/signin', userController.signIn)

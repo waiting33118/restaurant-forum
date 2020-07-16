@@ -20,6 +20,12 @@ const adminController = {
   },
   getUsers: (req, res) => {
     adminService.getUsers(req, res, users => res.json({ users }))
+  },
+  putUsers: (req, res) => {
+    adminService.putUsers(req, res, result => {
+      if (result.status === 'error') return res.json(result)
+      res.json(result)
+    })
   }
 }
 
