@@ -1,7 +1,6 @@
 const db = require('../models')
 const Restaurant = db.Restaurant
 const Category = db.Category
-const User = db.User
 const adminService = require('../services/adminService')
 
 const adminController = {
@@ -31,9 +30,7 @@ const adminController = {
     })
   },
   createRestaurant: (req, res) => {
-    Category.findAll({ raw: true, nest: true })
-      .then(categories => res.render('admin/create', { categories }))
-      .catch(error => console.log(error))
+    adminService.createRestaurant(req, res, categories => res.render('admin/create', { categories }))
   },
   editRestaurant: (req, res) => {
     const { id } = req.params

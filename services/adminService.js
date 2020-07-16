@@ -138,6 +138,11 @@ const adminService = {
         callback({ status: 'success', message: '已成功修改會員權限！' })
       })
       .catch(error => console.log(error))
+  },
+  createRestaurant: (req, res, callback) => {
+    Category.findAll({ raw: true, nest: true })
+      .then(categories => callback(categories))
+      .catch(error => console.log(error))
   }
 }
 
