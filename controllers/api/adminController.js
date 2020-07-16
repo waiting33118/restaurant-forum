@@ -17,6 +17,9 @@ const adminController = {
   },
   putRestaurant: (req, res) => {
     adminService.putRestaurant(req, res, result => res.json(result))
+  },
+  getUsers: (req, res) => {
+    adminService.getUsers(req, res, users => res.json({ users }))
   }
 }
 
