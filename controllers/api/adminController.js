@@ -29,6 +29,9 @@ const adminController = {
   },
   createRestaurant: (req, res) => {
     adminService.createRestaurant(req, res, categories => res.json({ categories }))
+  },
+  editRestaurant: (req, res) => {
+    adminService.editRestaurant(req, res, (categories, restaurant) => res.json({ categories, restaurant }))
   }
 }
 
