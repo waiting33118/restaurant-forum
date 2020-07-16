@@ -19,6 +19,7 @@ const categoryController = require('../controllers/api/categoryController')
 
 // admin - restaurant
 router.get('/admin/restaurants', authenticated, authenticatedAdmin, adminController.getRestaurants)
+router.get('/admin/restaurants/create', authenticated, authenticatedAdmin, adminController.createRestaurant)
 router.get('/admin/restaurant/:id', authenticated, authenticatedAdmin, adminController.getRestaurant)
 router.post('/admin/restaurants', authenticated, authenticatedAdmin, upload.single('image'), adminController.postRestaurants)
 router.put('/admin/restaurant/:id', authenticated, authenticatedAdmin, upload.single('image'), adminController.putRestaurant)

@@ -26,6 +26,9 @@ const adminController = {
       if (result.status === 'error') return res.json(result)
       res.json(result)
     })
+  },
+  createRestaurant: (req, res) => {
+    adminService.createRestaurant(req, res, categories => res.json({ categories }))
   }
 }
 
