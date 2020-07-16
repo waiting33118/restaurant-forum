@@ -10,9 +10,7 @@ const categoryController = {
     )
   },
   getCategory: (req, res) => {
-    Category.findByPk(req.params.id, { raw: true })
-      .then((category) => res.render('admin/categories', { category }))
-      .catch((error) => console.log(error))
+    categoryService.getCategory(req, res, category => res.render('admin/categories', { category }))
   },
   postCategories: (req, res) => {
     categoryService.postCategories(req, res, result => {
