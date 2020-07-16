@@ -1,8 +1,4 @@
-const db = require('../models')
-const Restaurant = db.Restaurant
-const Category = db.Category
 const adminService = require('../services/adminService')
-const { putRestaurant } = require('./api/adminController')
 
 const adminController = {
   getRestaurants: (req, res) => {
